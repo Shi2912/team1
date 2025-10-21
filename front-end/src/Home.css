@@ -1,0 +1,66 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  animation: rainbow 15s ease infinite;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Rainbow animation */
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Heading style */
+.home-container h2 {
+  color: MidnightBlue;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 3px LightGray;
+}
+
+/* Button wrapper */
+.button-group {
+  display: flex;
+  gap: 20px;
+}
+
+/* Button style */
+.home-container button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 12px;
+  background: DodgerBlue;
+  color: White;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px LightGray;
+  transition: 0.3s ease;
+}
+
+.home-container button:hover {
+  background: DeepSkyBlue;
+  transform: scale(1.05);
+  box-shadow: 4px 4px 12px Gray;
+}
+
+/* Links */
+.home-container a {
+  text-decoration: none;
+}
+
+/* Paragraph text */
+.home-container p {
+  color: DarkSlateGray;
+  font-size: 18px;
+  margin-top: 10px;
+}

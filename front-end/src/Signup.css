@@ -1,0 +1,117 @@
+/* Full page rainbow background */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  animation: rainbow 15s ease infinite;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Rainbow animation */
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Signup form container */
+.signup-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 25px 30px;
+  background-color: rgba(240, 248, 255, 0.9); /* semi-transparent AliceBlue */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Heading */
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: MediumVioletRed;
+  font-size: 32px;
+}
+
+/* Labels & Inputs */
+.signup-container label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: bold;
+  color: DarkSlateGray;
+}
+
+.signup-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+/* Role buttons */
+.role-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.role-buttons button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: MediumSlateBlue;
+  color: White;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.role-buttons button:hover {
+  background-color: SlateBlue;
+}
+
+/* Signup button */
+.signup-btn {
+  width: 100%;
+  background-color: Tomato;
+  color: White;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.signup-btn:hover {
+  background-color: DarkRed;
+}
+
+/* Paragraph links */
+.signup-container p {
+  margin-top: 20px;
+  text-align: center;
+  color: DarkMagenta;
+}
+
+.signup-container p a {
+  color: MediumBlue;
+  text-decoration: none;
+}
+
+.signup-container p a:hover {
+  text-decoration: underline;
+}
+/* Highlight selected role button */
+.role-buttons button.selected {
+  background-color: MediumVioletRed; /* different from normal */
+  color: White;
+  border: 2px solid DarkRed;
+}
