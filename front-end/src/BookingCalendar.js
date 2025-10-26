@@ -1,6 +1,313 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerDashboard.css";
-import BookingCalendar from "./BookingCalendar";
+
+// Simple Booking Modal Component
+const SimpleBookingModal = ({ service, onClose }) => {
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [bookingStatus, setBookingStatus] = useState('');
+
+  const timeSlots = ['09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'];
+
+  const handleBooking = (e) => {
+    e.preventDefault();
+    
+    if (!selectedDate || !selectedTime || !customerName || !customerAddress || !customerPhone) {
+      setBookingStatus('Please fill all fields');
+      return;
+    }
+
+    // Simulate booking success
+    setBookingStatus('success');
+    
+    // Auto-close after 2 seconds
+    setTimeout(() => {
+      onClose();
+    }, 2000);
+  };
+
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+  };
+
+  return (
+    <div className="booking-modal">
+      <div className="booking-modal-content" style={{ 
+        maxWidth: "500px", 
+        borderRadius: "15px",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+        overflow: "hidden"
+      }}>
+        <div style={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "#fff",
+          padding: "25px",
+          textAlign: "center",
+          position: "relative"
+        }}>
+          <span 
+            className="close" 
+            onClick={onClose}
+            style={{
+              position: "absolute",
+              top: "15px",
+              right: "20px",
+              fontSize: "1.8rem",
+              cursor: "pointer",
+              color: "#fff"
+            }}
+          >
+            &times;
+          </span>
+          <h2 style={{ 
+            margin: "0",
+            fontSize: "1.8rem",
+            fontWeight: "bold",
+            textShadow: "0 2px 4px rgba(0,0,0,0.3)"
+          }}>
+            Book Service
+          </h2>
+          <p style={{ 
+            margin: "10px 0 0 0",
+            opacity: 0.9,
+            fontSize: "1.1rem"
+          }}>
+            {service.service_name}
+          </p>
+        </div>
+
+        <form onSubmit={handleBooking} style={{ 
+          padding: "30px",
+          background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
+        }}>
+          {bookingStatus && (
+            <div style={{ 
+              color: bookingStatus === 'success' ? "#27ae60" : "#e74c3c", 
+              backgroundColor: bookingStatus === 'success' ? "#eafaf1" : "#ffeaea",
+              padding: "12px",
+              borderRadius: "8px",
+              marginBottom: "20px",
+              border: bookingStatus === 'success' ? "1px solid #27ae60" : "1px solid #e74c3c",
+              textAlign: "center",
+              fontWeight: "bold"
+            }}>
+              {bookingStatus === 'success' ? '✅ Booking confirmed! Thank you!' : bookingStatus}
+            </div>
+          )}
+
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ 
+              display: "block", 
+              fontWeight: "bold",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              color: "#2c3e50"
+            }}>
+              Your Name
+            </label>
+            <input
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              placeholder="Enter your full name"
+              style={{ 
+                width: "100%", 
+                padding: "12px",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+                fontSize: "1rem",
+                transition: "all 0.3s ease"
+              }}
+              onFocus={(e) => e.target.style.borderColor = "#667eea"}
+              onBlur={(e) => e.target.style.borderColor = "#ddd"}
+            />
+          </div>
+
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ 
+              display: "block", 
+              fontWeight: "bold",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              color: "#2c3e50"
+            }}>
+              Your Address
+            </label>
+            <textarea
+              value={customerAddress}
+              onChange={(e) => setCustomerAddress(e.target.value)}
+              placeholder="Enter your complete address"
+              style={{ 
+                width: "100%", 
+                padding: "12px",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+                fontSize: "1rem",
+                minHeight: "80px",
+                resize: "vertical",
+                transition: "all 0.3s ease",
+                fontFamily: "inherit"
+              }}
+              onFocus={(e) => e.target.style.borderColor = "#667eea"}
+              onBlur={(e) => e.target.style.borderColor = "#ddd"}
+            />
+          </div>
+
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ 
+              display: "block", 
+              fontWeight: "bold",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              color: "#2c3e50"
+            }}>
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              value={customerPhone}
+              onChange={(e) => setCustomerPhone(e.target.value)}
+              placeholder="Enter your phone number"
+              style={{ 
+                width: "100%", 
+                padding: "12px",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+                fontSize: "1rem",
+                transition: "all 0.3s ease"
+              }}
+              onFocus={(e) => e.target.style.borderColor = "#667eea"}
+              onBlur={(e) => e.target.style.borderColor = "#ddd"}
+            />
+          </div>
+
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ 
+              display: "block", 
+              fontWeight: "bold",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              color: "#2c3e50"
+            }}>
+              Preferred Date
+            </label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              min={getTomorrowDate()}
+              style={{ 
+                width: "100%", 
+                padding: "12px",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+                fontSize: "1rem",
+                transition: "all 0.3s ease"
+              }}
+              onFocus={(e) => e.target.style.borderColor = "#667eea"}
+              onBlur={(e) => e.target.style.borderColor = "#ddd"}
+            />
+          </div>
+
+          <div style={{ marginBottom: "25px" }}>
+            <label style={{ 
+              display: "block", 
+              fontWeight: "bold",
+              marginBottom: "10px",
+              fontSize: "1rem",
+              color: "#2c3e50"
+            }}>
+              Preferred Time
+            </label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+              {timeSlots.map((time) => (
+                <button
+                  key={time}
+                  type="button"
+                  onClick={() => setSelectedTime(time)}
+                  style={{
+                    padding: "10px",
+                    background: selectedTime === time ? "#667eea" : "#f8f9fa",
+                    color: selectedTime === time ? "white" : "#2c3e50",
+                    border: "2px solid #ddd",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    fontWeight: "500",
+                    transition: "all 0.3s ease"
+                  }}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ 
+            background: "#e8f4fd", 
+            padding: "15px", 
+            borderRadius: "8px", 
+            marginBottom: "20px",
+            border: "1px solid #bee5eb"
+          }}>
+            <h4 style={{ margin: "0 0 10px 0", color: "#0c5460" }}>Booking Summary</h4>
+            <p style={{ margin: "5px 0", color: "#2c3e50" }}><strong>Service:</strong> {service.service_name}</p>
+            <p style={{ margin: "5px 0", color: "#2c3e50" }}><strong>Price:</strong> ₹{service.price}</p>
+            {selectedDate && <p style={{ margin: "5px 0", color: "#2c3e50" }}><strong>Date:</strong> {new Date(selectedDate).toLocaleDateString()}</p>}
+            {selectedTime && <p style={{ margin: "5px 0", color: "#2c3e50" }}><strong>Time:</strong> {selectedTime}</p>}
+          </div>
+
+          <div style={{ display: "flex", gap: "15px" }}>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: "15px",
+                background: "linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)",
+                color: "#fff",
+                fontWeight: "bold",
+                border: "none",
+                borderRadius: "10px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                fontSize: "1rem"
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.opacity = 0.8)}
+              onMouseOut={(e) => (e.currentTarget.style.opacity = 1)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              style={{
+                flex: 1,
+                padding: "15px",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                color: "#fff",
+                fontWeight: "bold",
+                border: "none",
+                borderRadius: "10px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                fontSize: "1rem",
+                boxShadow: "0 4px 15px rgba(102, 126, 234, 0.4)"
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+            >
+              Confirm Booking
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 // Rating Form Component
 const RatingForm = ({ service, onClose }) => {
@@ -490,6 +797,20 @@ const CustomerDashboard = () => {
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
 
+  // Default categories in case API fails
+  const defaultCategories = [
+    { category: 'Plumbing' },
+    { category: 'Electrical' },
+    { category: 'Cleaning' },
+    { category: 'Carpentry' },
+    { category: 'Painting' },
+    { category: 'Gardening' },
+    { category: 'Tutoring' },
+    { category: 'Beauty' },
+    { category: 'Fitness' },
+    { category: 'Moving' }
+  ];
+
   useEffect(() => {
     fetchServices();
     fetchCategories();
@@ -516,9 +837,22 @@ const CustomerDashboard = () => {
     try {
       const res = await fetch("http://localhost:5000/service_categories");
       const data = await res.json();
-      setCategories(data);
+      console.log("Categories API response:", data);
+      
+      // Ensure categories is always an array
+      if (Array.isArray(data)) {
+        setCategories(data);
+      } else if (data && typeof data === 'object') {
+        // If it's an object, convert to array
+        const categoriesArray = Object.values(data);
+        setCategories(categoriesArray);
+      } else {
+        // Use default categories as fallback
+        setCategories(defaultCategories);
+      }
     } catch (err) {
       console.error("Error fetching categories:", err);
+      setCategories(defaultCategories);
     }
   };
 
@@ -536,6 +870,9 @@ const CustomerDashboard = () => {
     setFilters({ search: "", category: "", location: "" });
     fetchServices();
   };
+
+  // Always use a safe array for mapping
+  const displayCategories = Array.isArray(categories) && categories.length > 0 ? categories : defaultCategories;
 
   return (
     <div className="customer-dashboard">
@@ -580,9 +917,9 @@ const CustomerDashboard = () => {
               <label>Category</label>
               <select name="category" value={filters.category} onChange={handleFilterChange}>
                 <option value="">All Categories</option>
-                {categories.map((cat) => (
-                  <option key={cat.category} value={cat.category}>
-                    {cat.category}
+                {displayCategories.map((cat, index) => (
+                  <option key={cat.category || index} value={cat.category || cat}>
+                    {cat.category || cat}
                   </option>
                 ))}
               </select>
@@ -624,15 +961,13 @@ const CustomerDashboard = () => {
           <div className="services-grid">
             {services.map((service) => (
               <div key={service.id} className="service-card">
-                {/* REMOVED THE CATEGORY HEADING COMPLETELY */}
-                
                 <h3 className="service-title">{service.service_name}</h3>
                 <p className="description">{service.description}</p>
 
                 <div className="service-details">
                   <div className="price">₹{service.price}</div>
-                  <div className={`availability ${service.availability.toLowerCase()}`}>
-                    {service.availability}
+                  <div className={`availability ${service.availability ? service.availability.toLowerCase() : 'available'}`}>
+                    {service.availability || 'Available'}
                   </div>
                 </div>
 
@@ -678,7 +1013,7 @@ const CustomerDashboard = () => {
 
       {/* Booking Modal */}
       {showBookingModal && selectedService && (
-        <BookingCalendar service={selectedService} onClose={() => setShowBookingModal(false)} />
+        <SimpleBookingModal service={selectedService} onClose={() => setShowBookingModal(false)} />
       )}
 
       {/* Rating Modal */}
